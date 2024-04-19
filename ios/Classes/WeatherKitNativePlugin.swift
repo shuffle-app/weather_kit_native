@@ -18,6 +18,20 @@ public class WeatherKitNativePlugin: NSObject, FlutterPlugin {
         Task {
             await getWeather(currentLocation: currentLocation,result: result)
         }
+    case "getWeatherAttribution":
+        Task {
+        do {
+            let service = WeatherService()
+            let attribution = try await service.attribution
+            if #available(iOS 16.4, *) {
+                result(["legalPageURL" : attribution.legalPageURL.absoluteString, "serviceName": attribution.serviceName, "legalAttributionText":attribution.legalAttributionText])
+            } else {
+                result(["legalPageURL" : attribution.legalPageURL, "serviceName": attribution.serviceName,"legalAttributionText":""])
+            }
+        } catch {
+            result(FlutterError.init(code: "errorGetAttribution", message: "error in obtainong weatherAttribution", details: nil))
+                }
+        }
     default:
       result(FlutterMethodNotImplemented)
     }

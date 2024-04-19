@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_kit_native/models/platform_weather.dart';
 
+import 'models/weather_attribution.dart';
 import 'weather_kit_native_platform_interface.dart';
 
 /// An implementation of [WeatherKitNativePlatform] that uses method channels.
@@ -15,5 +16,11 @@ class MethodChannelWeatherKitNative extends WeatherKitNativePlatform {
     final json = await methodChannel
         .invokeMethod<Map<Object?, Object?>>('getCurrentWeather', {'longitude': longitude, 'latitude': latitude});
     return json == null ? null : PlatformWeather.fromJson(json);
+  }
+
+  @override
+  Future<WeatherAttribution?> getWeatherAttribution() async {
+    final json = await methodChannel.invokeMethod<Map<Object?, Object?>>('getWeatherAttribution');
+    return json == null ? null : WeatherAttribution.fromJson(json);
   }
 }

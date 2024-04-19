@@ -1,6 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:weather_kit_native/models/platform_weather.dart';
 
+import 'models/weather_attribution.dart';
 import 'weather_kit_native_method_channel.dart';
 
 abstract class WeatherKitNativePlatform extends PlatformInterface {
@@ -26,5 +27,9 @@ abstract class WeatherKitNativePlatform extends PlatformInterface {
 
   Future<PlatformWeather?> getCurrentWeather({required double latitude, required double longitude}) {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<WeatherAttribution?> getWeatherAttribution() {
+    throw UnimplementedError('getWeatherAttribution() has not been implemented.');
   }
 }
